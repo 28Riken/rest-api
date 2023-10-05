@@ -1,11 +1,12 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-@app.route('/armstrong/<string:n>')
+@app.route('/')
 def hello_world():
     return 'Hello, World!'
 
+@app.route('/armstrong/<int:n>')
 def armstrong(n):
     sum = 0
     order = len(str(n))
@@ -17,10 +18,21 @@ def armstrong(n):
 
     if(sum == copy_n):
         print("f{copy_n} is an armstrong number")
-        return True
+        result = {
+            "Number": copy_n,
+            "Armstrong": True,
+            "Server IP": "122.234.213.54",
+            "Other Numbers": [1,22,33,4,5,66]
+        }
     else:
         print("f{copy_n} is not an armstrong number")
-        return False
+        result = {
+            "Number": copy_n,
+            "Armstrong": False,
+            "Server IP": "122.234.213.54",
+            "Other Numbers": [1,22,33,4,5,66]
+        }
+    return jsonify(result)
 
 if __name__=="__main__":
     app.run(debug=True)
